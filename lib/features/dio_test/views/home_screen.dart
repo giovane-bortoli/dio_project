@@ -1,5 +1,8 @@
 import 'package:dio_project/features/dio_test/services/get_announcements.dart';
+import 'package:dio_project/main.dart';
 import 'package:flutter/material.dart';
+
+import '../controller/annoucements_store.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -9,6 +12,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final annoucementStore = getIt<AnnoucementStore>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +25,20 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'API TEST',
             ),
-            Text(
-              'teste',
-              style: Theme.of(context).textTheme.headline4,
+            ElevatedButton(
+              onPressed: () {
+                annoucementStore.getAnnoucements();
+              },
+              child: const Text('TEST GET'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                annoucementStore.postAnnoucements();
+              },
+              child: const Text('TEST POST'),
+            )
           ],
         ),
       ),
