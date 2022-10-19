@@ -27,8 +27,8 @@ class DioImpl extends DioClient {
         queryParameters: query,
         options: dio.Options(
           headers: headers,
-          sendTimeout: 5000,
-          receiveTimeout: 5000,
+          // sendTimeout: 5000,
+          // receiveTimeout: 5000,
         ));
 
     return DioApiResponse.fromDioResponse(response);

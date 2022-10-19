@@ -22,8 +22,8 @@ abstract class _AnnoucementStoreBase with Store {
 
   Future<void> postAnnoucements() async {
     try {
-      await postService.postAnnoucements();
-      inspect(postService.postAnnoucements());
+      final result = await postService.postAnnoucements();
+      //inspect(result);
     } catch (_) {
       throw Exception();
     }
