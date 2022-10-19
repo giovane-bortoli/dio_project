@@ -1,4 +1,5 @@
 import 'package:dio_project/features/dio_test/services/get_announcements.dart';
+import 'package:dio_project/features/dio_test/services/post_annoucements.dart';
 import 'package:dio_project/main.dart';
 import 'package:flutter/material.dart';
 
@@ -35,19 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                annoucementStore.postAnnoucements();
+                PostAnnoucements().postAnnoucements();
               },
               child: const Text('TEST POST'),
             )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          GetAnnoucements().getAnnoucements();
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

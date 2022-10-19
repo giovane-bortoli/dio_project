@@ -30,7 +30,22 @@ class PostAnnoucementsModel {
       files: json['files'],
       salary: json['salary'],
       workArea: json['workArea'],
-      location: json['location'],
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['title'] = title;
+    data['description'] = description;
+    data['annoucementType'] = annoucementType;
+    data['expiresIn'] = expiresIn;
+    data['files'] = files;
+    data['salary'] = salary;
+    data['workArea'] = workArea;
+    data['location'] = location != null ? location!.toJson() : null;
+    return data;
   }
 }

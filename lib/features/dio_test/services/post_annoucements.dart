@@ -2,22 +2,21 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:dio_project/features/dio_test/models/location_model.dart';
+import 'package:dio_project/features/dio_test/models/post_annoucements_model.dart';
 import 'package:dio_project/main.dart';
 import 'package:dio_project/shared/client/dio_impl.dart';
 import 'package:dio_project/shared/utils/app_configs.dart';
 
 class PostAnnoucements {
-  //TODO DÚVIDA, NESSE MÉTODO COMO PASSAR O AUTHORIZATION E TOKEN SE NECESSÁRIO
+  //TODO DÚVIDA, NESSE MÉTODO COMO PASSAR O AUTHORIZATION E TOKEN SE NECESSÁRIO E ENTENDER O ENVIO DO POST E QUAIS PARAMETROS DIFERENTES DO GET
   final dio = Dio();
-  // Future<List<PostAnnoucementsModel>> postAnnoucements() async {
+  // Future<PostAnnoucementsModel> postAnnoucements() async {
   final client = getIt<DioImpl>();
 
   //   final response = await client.post('${AppConfigs.mockUrl}');
   //   if (response.statusCode == 200) {
   //     inspect(response);
-  //     return List.from(response.data)
-  //         .map((e) => PostAnnoucementsModel.fromJson(e))
-  //         .toList();
+  //     return PostAnnoucementsModel.fromJson(response.data);
   //   } else {
   //     throw Exception();
   //   }
@@ -51,6 +50,11 @@ class PostAnnoucements {
       await dio.post(
         uri,
         data: form,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
       );
     } catch (_) {
       throw Exception();

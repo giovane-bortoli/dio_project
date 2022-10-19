@@ -27,10 +27,10 @@ class DioImpl extends DioClient {
         queryParameters: query,
         options: dio.Options(
           headers: headers,
-          sendTimeout: 1000,
-          receiveTimeout: 1000,
+          sendTimeout: 5000,
+          receiveTimeout: 5000,
         ));
-    //TODO MODEL.FROMJSON POST
-    throw UnimplementedError();
+
+    return DioApiResponse.fromDioResponse(response);
   }
 }
