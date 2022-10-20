@@ -5,5 +5,5 @@ abstract class DioClient {
       {Map<String, String>? headers, Map<String, dynamic>? query});
 
   Future<DioApiResponse> post(String path,
-      {Map<String, String>? headers, Map<String, dynamic>? query});
+      {Map<String, String>? body, Map<String, dynamic>? query});
 }

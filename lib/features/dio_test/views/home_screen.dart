@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                PostAnnoucements().postAnnoucements();
+                annoucementStore.postAnnoucements();
               },
               child: const Text('TEST POST'),
             )

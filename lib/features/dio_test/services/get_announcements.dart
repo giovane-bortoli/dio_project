@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio_project/features/dio_test/models/annoucements_model.dart';
 import 'package:dio_project/main.dart';
 import 'package:dio_project/shared/client/dio_impl.dart';
+import 'package:dio_project/shared/client/errors/error_exceptions.dart';
 import 'package:dio_project/shared/utils/app_configs.dart';
 
 class GetAnnoucements {
@@ -15,7 +16,16 @@ class GetAnnoucements {
           .map((e) => AnnoucementsModel.fromJson(e))
           .toList();
     } else {
-      throw Exception();
+      switch (response.statusCode) {
+        case 404:
+          throw NotFoundException();
+        case 403:
+          throw ForbiddenException();
+        case 500:
+          throw InternalServerException();
+        default:
+          throw GenericException();
+      }
     }
   }
 }
