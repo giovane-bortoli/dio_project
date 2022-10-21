@@ -1,38 +1,40 @@
-import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
-import 'package:dio_project/shared/client/dio_api_response.dart';
-import 'package:dio_project/shared/client/dio_client.dart';
+import 'package:dio_project/shared/client/api_response.dart';
+import 'package:dio_project/shared/client/client.dart';
 
-class DioImpl extends DioClient {
-  final dio.Dio client = Dio();
+class DioImpl implements Client {
+  //final dio.Dio client = Dio();
+  final Dio dio;
+
+  DioImpl({required this.dio});
 
   @override
-  Future<DioApiResponse> get(String path,
+  Future<ApiResponse> get(String path,
       {Map<String, String>? headers, Map<String, dynamic>? query}) async {
-    final response = await client.get(path,
+    final response = await dio.get(path,
         queryParameters: query,
-        options: dio.Options(
+        options: Options(
           headers: headers,
           sendTimeout: 1000,
           receiveTimeout: 1000,
         ));
 
-    return DioApiResponse.fromDioResponse(response);
+    return ApiResponse.fromDioResponse(response);
   }
 
   @override
-  Future<DioApiResponse> post(
+  Future<ApiResponse> post(
       {required String path,
       Map<String, dynamic>? body,
       Map<String, dynamic>? query}) async {
-    final response = await client.post(path,
+    final response = await dio.post(path,
         queryParameters: query,
-        options: dio.Options(
+        options: Options(
           headers: body,
           sendTimeout: 50000,
           receiveTimeout: 50000,
         ));
 
-    return DioApiResponse.fromDioResponse(response);
+    return ApiResponse.fromDioResponse(response);
   }
 }

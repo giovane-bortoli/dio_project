@@ -1,13 +1,13 @@
-import 'package:dio_project/shared/client/dio_api_response.dart';
+import 'package:dio_project/shared/client/api_response.dart';
 
-abstract class DioClient {
-  Future<DioApiResponse> get(
+abstract class Client {
+  Future<ApiResponse> get(
     String path, {
     Map<String, String>? headers,
     Map<String, dynamic>? query,
   });
 
-  Future<DioApiResponse> post({
+  Future<ApiResponse> post({
     required String path,
     Map<String, String>? body,
     Map<String, dynamic>? query,

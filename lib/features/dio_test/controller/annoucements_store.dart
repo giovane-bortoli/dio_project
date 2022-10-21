@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:dio_project/features/dio_test/models/post_annoucements_model.dart';
 
 import 'package:dio_project/features/dio_test/services/services.dart';
+import 'package:dio_project/features/dio_test/services/services_interface.dart';
+import 'package:dio_project/main.dart';
 import 'package:dio_project/shared/Widgets/custom_snack_bar.dart';
 import 'package:dio_project/shared/client/dio_impl.dart';
 import 'package:dio_project/shared/client/errors/error_exceptions.dart';
@@ -13,7 +15,9 @@ part 'annoucements_store.g.dart';
 class AnnoucementStore = _AnnoucementStoreBase with _$AnnoucementStore;
 
 abstract class _AnnoucementStoreBase with Store {
-  final services = Services();
+  final ServiceInterface services;
+
+  _AnnoucementStoreBase({required this.services});
 
   Future<void> getAnnoucements() async {
     try {
