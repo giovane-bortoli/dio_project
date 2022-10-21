@@ -13,7 +13,7 @@ class PostAnnoucements {
   final dio = Dio();
   Future<PostAnnoucementsModel> postAnnoucements() async {
     final client = getIt<DioImpl>();
-    final response = await client.post('${AppConfigs.mockUrl}');
+    final response = await client.post(path: '${AppConfigs.mockUrl}');
     try {
       inspect(response);
       return PostAnnoucementsModel.fromJson(response.data);

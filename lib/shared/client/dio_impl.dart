@@ -21,14 +21,16 @@ class DioImpl extends DioClient {
   }
 
   @override
-  Future<DioApiResponse> post(String path,
-      {Map<String, String>? body, Map<String, dynamic>? query}) async {
+  Future<DioApiResponse> post(
+      {required String path,
+      Map<String, String>? body,
+      Map<String, dynamic>? query}) async {
     final response = await client.post(path,
         queryParameters: query,
         options: dio.Options(
           headers: body,
-          // sendTimeout: 5000,
-          // receiveTimeout: 5000,
+          sendTimeout: 50000,
+          receiveTimeout: 50000,
         ));
 
     return DioApiResponse.fromDioResponse(response);
