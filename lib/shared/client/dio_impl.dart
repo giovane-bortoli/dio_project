@@ -23,7 +23,7 @@ class DioImpl extends DioClient {
   @override
   Future<DioApiResponse> post(
       {required String path,
-      Map<String, String>? body,
+      Map<String, dynamic>? body,
       Map<String, dynamic>? query}) async {
     final response = await client.post(path,
         queryParameters: query,
