@@ -1,31 +1,34 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
-import 'package:dio_project/features/dio_test/models/post_annoucements_model.dart';
 
-import 'package:dio_project/features/dio_test/services/services.dart';
-import 'package:dio_project/features/dio_test/services/services_interface.dart';
-import 'package:dio_project/main.dart';
-import 'package:dio_project/shared/Widgets/custom_snack_bar.dart';
-import 'package:dio_project/shared/client/dio_impl.dart';
-import 'package:dio_project/shared/client/errors/error_exceptions.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+
+import 'package:dio_project/features/dio_test/services/prefs.dart';
+import 'package:dio_project/features/dio_test/services/services_interface.dart';
+import 'package:dio_project/shared/Widgets/custom_snack_bar.dart';
+import 'package:dio_project/shared/client/errors/error_exceptions.dart';
+
 part 'annoucements_store.g.dart';
 
 class AnnoucementStore = _AnnoucementStoreBase with _$AnnoucementStore;
 
 abstract class _AnnoucementStoreBase with Store {
   final ServiceInterface services;
+  final Prefs? prefs;
 
-  _AnnoucementStoreBase({required this.services});
+  _AnnoucementStoreBase({
+    required this.services,
+    this.prefs,
+  });
 
   Future<void> getAnnoucements() async {
     try {
       //init loading state
       final result = await services.getAnnoucements();
+      prefs?.saveData(result);
       inspect(result);
     } on NotFoundException {
-      throw const CustomSnackBar(message: 'Not Found!');
+      throw 'Página não encontrada';
     } on InternalServerException {
       throw const CustomSnackBar(message: 'Internal server Error!');
     } on ForbiddenException {

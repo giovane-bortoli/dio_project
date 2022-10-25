@@ -1,3 +1,4 @@
+import 'package:dio_project/features/dio_test/services/prefs.dart';
 import 'package:dio_project/main.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Prefs prefs = Prefs();
+
   final annoucementStore = getIt<AnnoucementStore>();
 
   @override
@@ -37,6 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 annoucementStore.postAnnoucements();
               },
               child: const Text('TEST POST'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('SAVE DATA'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('GET DATA'),
             )
           ],
         ),
