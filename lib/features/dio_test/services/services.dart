@@ -15,8 +15,6 @@ import 'package:dio_project/shared/client/errors/error_exceptions.dart';
 import 'package:dio_project/shared/utils/app_configs.dart';
 
 class Services implements ServiceInterface {
-  //final client = getIt<DioImpl>();
-
   final Client client;
   final Prefs? prefs;
 

@@ -7,26 +7,30 @@ import 'package:dio_project/features/dio_test/services/prefs.dart';
 import 'package:dio_project/features/dio_test/services/services_interface.dart';
 import 'package:dio_project/shared/Widgets/custom_snack_bar.dart';
 import 'package:dio_project/shared/client/errors/error_exceptions.dart';
-
 part 'annoucements_store.g.dart';
 
 class AnnoucementStore = _AnnoucementStoreBase with _$AnnoucementStore;
 
 abstract class _AnnoucementStoreBase with Store {
+  Prefs prefs = Prefs();
   final ServiceInterface services;
-  final Prefs? prefs;
 
   _AnnoucementStoreBase({
     required this.services,
-    this.prefs,
   });
+
+  @observable
+  bool userOffline = false;
+
+  @action
+  void setUserOffline(bool value) => userOffline = value;
 
   Future<void> getAnnoucements() async {
     try {
       //init loading state
       final result = await services.getAnnoucements();
-      prefs?.saveData(result);
-      inspect(result);
+      final result2 = prefs.saveData(result);
+      inspect(result2);
     } on NotFoundException {
       throw 'Página não encontrada';
     } on InternalServerException {
