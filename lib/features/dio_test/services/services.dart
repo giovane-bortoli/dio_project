@@ -46,7 +46,6 @@ class Services implements ServiceInterface {
   Future<PostAnnoucementsModel> postAnnoucements() async {
     final response = await client.post(path: '${AppConfigs.mockUrl}');
     try {
-      inspect(response);
       return PostAnnoucementsModel.fromJson(response.data);
     } catch (_) {
       switch (response.statusCode) {

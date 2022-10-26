@@ -29,8 +29,7 @@ abstract class _AnnoucementStoreBase with Store {
     try {
       //init loading state
       final result = await services.getAnnoucements();
-      final result2 = prefs.saveData(result);
-      inspect(result2);
+      await prefs.saveData(result);
     } on NotFoundException {
       throw 'Página não encontrada';
     } on InternalServerException {
@@ -48,7 +47,6 @@ abstract class _AnnoucementStoreBase with Store {
     try {
       // init loading state
       final result = await services.postAnnoucements();
-      inspect(result);
     } on NotFoundException {
       throw const CustomSnackBar(message: 'Not Found!');
     } on InternalServerException {
@@ -60,5 +58,10 @@ abstract class _AnnoucementStoreBase with Store {
     } finally {
       //finish loading state
     }
+  }
+
+  Future<void> getPersistedData() async {
+    final result = await prefs.getData();
+    inspect(result);
   }
 }

@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _postButton(),
           _secondTitle(),
           _switchButton(),
+          _buttonGetPersistedData(),
         ],
       ),
     );
@@ -69,11 +70,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text('userOfflineMode'),
       );
 
+  //salvar o estado true ou false no shared preference
   Widget _switchButton() => Switch(
         activeColor: Colors.blue,
         value: annoucementStore.userOffline,
         onChanged: (value) {
           annoucementStore.setUserOffline(value);
+          annoucementStore.getPersistedData();
         },
+      );
+
+  Widget _buttonGetPersistedData() => ElevatedButton(
+        onPressed: () {},
+        child: const Text('GET PERSISTED DATA'),
       );
 }
