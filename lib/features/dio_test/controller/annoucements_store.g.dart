@@ -25,6 +25,38 @@ mixin _$AnnoucementStore on _AnnoucementStoreBase, Store {
     });
   }
 
+  late final _$announcementListAtom =
+      Atom(name: '_AnnoucementStoreBase.announcementList', context: context);
+
+  @override
+  List<AnnoucementsModel> get announcementList {
+    _$announcementListAtom.reportRead();
+    return super.announcementList;
+  }
+
+  @override
+  set announcementList(List<AnnoucementsModel> value) {
+    _$announcementListAtom.reportWrite(value, super.announcementList, () {
+      super.announcementList = value;
+    });
+  }
+
+  late final _$loadAnnoucementsAsyncAction =
+      AsyncAction('_AnnoucementStoreBase.loadAnnoucements', context: context);
+
+  @override
+  Future<void> loadAnnoucements() {
+    return _$loadAnnoucementsAsyncAction.run(() => super.loadAnnoucements());
+  }
+
+  late final _$getPersistedDataAsyncAction =
+      AsyncAction('_AnnoucementStoreBase.getPersistedData', context: context);
+
+  @override
+  Future<void> getPersistedData() {
+    return _$getPersistedDataAsyncAction.run(() => super.getPersistedData());
+  }
+
   late final _$_AnnoucementStoreBaseActionController =
       ActionController(name: '_AnnoucementStoreBase', context: context);
 
@@ -42,7 +74,8 @@ mixin _$AnnoucementStore on _AnnoucementStoreBase, Store {
   @override
   String toString() {
     return '''
-userOffline: ${userOffline}
+userOffline: ${userOffline},
+announcementList: ${announcementList}
     ''';
   }
 }

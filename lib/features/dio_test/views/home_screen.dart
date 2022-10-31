@@ -1,5 +1,6 @@
 import 'package:dio_project/features/dio_test/services/prefs.dart';
 import 'package:dio_project/main.dart';
+import 'package:dio_project/shared/utils/app_formaters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -16,6 +17,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Prefs prefs = Prefs();
 
   final annoucementStore = getIt<AnnoucementStore>();
+  @override
+  void initState() {
+    loadAnnoucements();
+    super.initState();
+  }
+
+  Future<void> loadAnnoucements() async {
+    await annoucementStore.loadAnnoucements();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +43,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget content(context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 150),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _textTitle(),
-          _getButton(),
-          _postButton(),
-          _secondTitle(),
-          _switchButton(),
-          _buttonGetPersistedData(),
-        ],
+      padding: const EdgeInsets.only(left: 50),
+      child: SingleChildScrollView(
+        child: Observer(builder: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _textTitle(),
+              _getButton(),
+              _postButton(),
+              _secondTitle(),
+              _switchButton(),
+              _buttonGetPersistedData(),
+              _listPersistedData(),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -76,12 +91,46 @@ class _MyHomePageState extends State<MyHomePage> {
         value: annoucementStore.userOffline,
         onChanged: (value) {
           annoucementStore.setUserOffline(value);
-          annoucementStore.getPersistedData();
         },
       );
 
   Widget _buttonGetPersistedData() => ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          annoucementStore.getPersistedData();
+        },
         child: const Text('GET PERSISTED DATA'),
+      );
+
+  Widget _listPersistedData() => ListView.builder(
+        itemCount: annoucementStore.announcementList.length,
+        physics: const ScrollPhysics(),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (BuildContext context, int data) {
+          return Column(
+            children: [
+              Card(
+                shadowColor: Colors.black,
+                elevation: 5,
+                child: Column(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        //método para salvar ou limpar do shared Preference
+                      },
+                      icon: const Icon(Icons.star_border_outlined),
+                    ),
+                    Text(annoucementStore.announcementList[data].title
+                        .toString()),
+                    Text(annoucementStore.announcementList[data].description
+                        .toString()),
+                    Text(
+                        'Data de criação: ${formatHour(DateTime.parse(annoucementStore.announcementList[data].createdAt!))}'),
+                  ],
+                ),
+              )
+            ],
+          );
+        },
       );
 }

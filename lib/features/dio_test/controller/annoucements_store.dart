@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
+import 'package:dio_project/features/dio_test/models/annoucements_model.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:dio_project/features/dio_test/services/prefs.dart';
@@ -46,7 +47,7 @@ abstract class _AnnoucementStoreBase with Store {
   Future<void> postAnnoucements() async {
     try {
       // init loading state
-      final result = await services.postAnnoucements();
+      await services.postAnnoucements();
     } on NotFoundException {
       throw const CustomSnackBar(message: 'Not Found!');
     } on InternalServerException {
@@ -60,6 +61,20 @@ abstract class _AnnoucementStoreBase with Store {
     }
   }
 
+  @observable
+  List<AnnoucementsModel> announcementList = [];
+
+  @action
+  Future<void> loadAnnoucements() async {
+    try {
+      final result = await prefs.getData();
+      return announcementList.addAll(result);
+    } catch (e) {
+      throw [];
+    }
+  }
+
+  @action
   Future<void> getPersistedData() async {
     final result = await prefs.getData();
     inspect(result);
