@@ -42,11 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget content(context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 50),
-      child: SingleChildScrollView(
-        child: Observer(builder: (context) {
-          return Column(
+    return SingleChildScrollView(
+      child: Observer(builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -56,11 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
               _secondTitle(),
               _switchButton(),
               _buttonGetPersistedData(),
+              _searchField(),
               _listPersistedData(),
             ],
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 
@@ -99,6 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
           annoucementStore.getPersistedData();
         },
         child: const Text('GET PERSISTED DATA'),
+      );
+
+  Widget _searchField() => TextField(
+        decoration: InputDecoration(
+          hintText: 'Search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        onChanged: (value) {
+          annoucementStore.updateList(value);
+        },
       );
 
   Widget _listPersistedData() => ListView.builder(

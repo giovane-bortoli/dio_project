@@ -65,6 +65,14 @@ abstract class _AnnoucementStoreBase with Store {
   List<AnnoucementsModel> announcementList = [];
 
   @action
+  void updateList(String value) {
+    announcementList = announcementList
+        .where((element) =>
+            element.title!.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+  }
+
+  @action
   Future<void> loadAnnoucements() async {
     try {
       final result = await prefs.getData();
