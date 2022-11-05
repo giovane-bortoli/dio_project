@@ -23,6 +23,24 @@ abstract class _AnnoucementStoreBase with Store {
   @observable
   bool userOffline = false;
 
+  @observable
+  String name = '';
+
+  @action
+  void setName(String value) => name = value;
+
+  @observable
+  String title = '';
+
+  @action
+  void setTitle(String value) => title = value;
+
+  @observable
+  String description = '';
+
+  @action
+  void setDescription(String value) => description = value;
+
   @action
   void setUserOffline(bool value) => userOffline = value;
 
@@ -64,6 +82,7 @@ abstract class _AnnoucementStoreBase with Store {
   @observable
   List<AnnoucementsModel> announcementList = [];
 
+  //Método para filtrar pesquisa
   @action
   void updateList(String value) {
     announcementList = announcementList

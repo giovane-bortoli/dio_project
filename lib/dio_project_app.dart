@@ -1,4 +1,5 @@
 import 'package:dio_project/features/dio_test/views/home_screen.dart';
+import 'package:dio_project/shared/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      routes: AppRoutes.routes(context),
+      initialRoute: '/home',
     );
   }
 }

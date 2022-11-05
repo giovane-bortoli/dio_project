@@ -95,11 +95,21 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
 
-  Widget _buttonGetPersistedData() => ElevatedButton(
-        onPressed: () {
-          annoucementStore.getPersistedData();
-        },
-        child: const Text('GET PERSISTED DATA'),
+  Widget _buttonGetPersistedData() => Row(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              annoucementStore.getPersistedData();
+            },
+            child: const Text('GET PERSISTED DATA'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.popAndPushNamed(context, '/createAnnoucement');
+            },
+            child: const Text('Create Annoucement'),
+          )
+        ],
       );
 
   Widget _searchField() => TextField(
