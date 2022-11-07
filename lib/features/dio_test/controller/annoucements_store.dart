@@ -18,6 +18,8 @@ abstract class _AnnoucementStoreBase with Store {
   Prefs prefs = Prefs();
   final ServiceInterface services;
 
+  List<AnnoucementsModel> _initialList = [];
+
   _AnnoucementStoreBase({
     required this.services,
   });
@@ -54,11 +56,11 @@ abstract class _AnnoucementStoreBase with Store {
     } on NotFoundException {
       throw 'Página não encontrada';
     } on InternalServerException {
-      throw const CustomSnackBar(message: 'Internal server Error!');
+      throw 'Internal server Error!';
     } on ForbiddenException {
-      throw const CustomSnackBar(message: 'Forbidden Error');
+      throw 'Forbidden Error!';
     } on GenericException {
-      throw const CustomSnackBar(message: 'Generic Error');
+      throw 'Generic Error!';
     } finally {
       //finish loading state
     }
@@ -69,13 +71,13 @@ abstract class _AnnoucementStoreBase with Store {
       // init loading state
       await services.postAnnoucements();
     } on NotFoundException {
-      throw const CustomSnackBar(message: 'Not Found!');
+      throw 'Página não encontrada';
     } on InternalServerException {
-      throw const CustomSnackBar(message: 'Internal server Error!');
+      throw 'Internal server Error!';
     } on ForbiddenException {
-      throw const CustomSnackBar(message: 'Forbidden Error');
+      throw 'Forbidden Error!';
     } on GenericException {
-      throw const CustomSnackBar(message: 'Generic Error');
+      throw 'Generic Error!';
     } finally {
       //finish loading state
     }
@@ -100,29 +102,54 @@ abstract class _AnnoucementStoreBase with Store {
     required String description,
   }) {
     try {
-      final body = <AnnoucementsModel>{};
+      final AnnoucementsModel model = AnnoucementsModel(
+        title: name,
+        description: description,
+        userName: name,
+      );
 
-      //  body.
-      // body.putIfAbsent('title', () => title);
-      // body.putIfAbsent('description', () => description);
+      announcementList.insert(0, model);
+    } catch (e) {
+      throw e;
+    }
+  }
 
-      announcementList.insert(0, body.single);
-    } catch (e) {}
+  @observable
+  bool isFavorite = false;
+
+  @action
+  void setIsFavorite(bool value) => isFavorite = value;
+
+  @action
+  void addFavorite({required bool favorite}) {
+    try {
+      final AnnoucementsModel model = AnnoucementsModel(isFavorite: favorite);
+
+      announcementList.add(model);
+    } catch (e) {
+      throw e;
+    }
   }
 
   @action
   Future<void> loadAnnoucements() async {
     try {
       final result = await prefs.getData();
-      return announcementList.addAll(result);
+      _initialList = result;
+      announcementList.addAll(result);
     } catch (e) {
       throw [];
     }
   }
 
   @action
+  void clearFilter() {
+    announcementList = _initialList;
+  }
+
+  @action
   Future<void> getPersistedData() async {
     final result = await prefs.getData();
-    inspect(result);
+    return announcementList.addAll(result);
   }
 }

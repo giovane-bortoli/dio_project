@@ -83,9 +83,10 @@ class _CreateAnnoucementViewState extends State<CreateAnnoucementView> {
         onPressed: () {
           //Método para adicionar a Lista
           annoucementStore.addItemList(
-              name: annoucementStore.name,
-              title: annoucementStore.title,
-              description: annoucementStore.description);
+            name: annoucementStore.name,
+            title: annoucementStore.title,
+            description: annoucementStore.description,
+          );
         },
         child: const Text('Create Annoucement'),
       );

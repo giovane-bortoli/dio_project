@@ -8,6 +8,7 @@ class AnnoucementsModel {
   final String? id;
   final int? announcementType;
   final List<String>? files;
+  final bool? isFavorite;
   AnnoucementsModel({
     this.title,
     this.description,
@@ -17,6 +18,7 @@ class AnnoucementsModel {
     this.id,
     this.announcementType,
     this.files,
+    this.isFavorite,
   });
 
   factory AnnoucementsModel.fromJson(Map<String, dynamic> json) {

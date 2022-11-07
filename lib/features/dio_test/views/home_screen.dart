@@ -112,6 +112,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
 
+  void _handleChanged(String value) {
+    if (value.isEmpty) {
+      annoucementStore.clearFilter();
+    } else {
+      annoucementStore.updateList(value);
+    }
+  }
+
   Widget _searchField() => TextField(
         decoration: InputDecoration(
           hintText: 'Search',
@@ -120,9 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
             borderRadius: BorderRadius.circular(5),
           ),
         ),
-        onChanged: (value) {
-          annoucementStore.updateList(value);
-        },
+        onChanged: _handleChanged,
       );
 
   Widget _listPersistedData() => ListView.builder(
@@ -140,9 +146,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        //método para salvar ou limpar do shared Preference
+                        annoucementStore.addFavorite(
+                            favorite: annoucementStore.isFavorite);
                       },
-                      icon: const Icon(Icons.star_border_outlined),
+                      icon: Icon(
+                        Icons.star_border_outlined,
+                        color: annoucementStore.isFavorite
+                            ? Colors.yellow
+                            : Colors.black,
+                      ),
                     ),
                     Text(annoucementStore.announcementList[data].title
                         .toString()),
