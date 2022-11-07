@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 import 'package:dio_project/features/dio_test/models/annoucements_model.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:dio_project/features/dio_test/services/prefs.dart';
@@ -89,6 +91,23 @@ abstract class _AnnoucementStoreBase with Store {
         .where((element) =>
             element.title!.toLowerCase().contains(value.toLowerCase()))
         .toList();
+  }
+
+  @action
+  void addItemList({
+    required String name,
+    required String title,
+    required String description,
+  }) {
+    try {
+      final body = <AnnoucementsModel>{};
+
+      //  body.
+      // body.putIfAbsent('title', () => title);
+      // body.putIfAbsent('description', () => description);
+
+      announcementList.insert(0, body.single);
+    } catch (e) {}
   }
 
   @action
