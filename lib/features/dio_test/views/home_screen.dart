@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _secondTitle(),
               _switchButton(),
               _buttonGetPersistedData(),
+              _favoriteButton(),
               _searchField(),
               _listPersistedData(),
             ],
@@ -108,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.popAndPushNamed(context, '/createAnnoucement');
             },
             child: const Text('Create Annoucement'),
-          )
+          ),
         ],
       );
 
@@ -120,6 +121,49 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Widget _favoriteButton() => ElevatedButton(
+        onPressed: () {
+          ListView.builder(
+            itemCount: annoucementStore.favoriteList.length,
+            physics: const ScrollPhysics(),
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (BuildContext context, int data) {
+              final announcement = annoucementStore.announcementList[data];
+
+              return Column(
+                children: [
+                  Card(
+                    shadowColor: Colors.black,
+                    elevation: 5,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            annoucementStore.setIsFavorite(true);
+                            annoucementStore.addItemList(announcement);
+                          },
+                          icon: Icon(
+                            Icons.star_border_outlined,
+                            color: annoucementStore.isFavorite
+                                ? Colors.yellow
+                                : Colors.black,
+                          ),
+                        ),
+                        Text(announcement.title.toString()),
+                        Text(announcement.description.toString()),
+                        Text(
+                            'Data de criação: ${formatHour(DateTime.parse(announcement.createdAt!))}'),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            },
+          );
+        },
+        child: const Text('Favorite List'),
+      );
   Widget _searchField() => TextField(
         decoration: InputDecoration(
           hintText: 'Search',
@@ -137,6 +181,8 @@ class _MyHomePageState extends State<MyHomePage> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int data) {
+          final announcement = annoucementStore.announcementList[data];
+
           return Column(
             children: [
               Card(
@@ -146,8 +192,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        annoucementStore.addFavorite(
-                            favorite: annoucementStore.isFavorite);
+                        annoucementStore.setIsFavorite(true);
+                        annoucementStore.addItemList(announcement);
+                        annoucementStore.setIsFavorite(true);
                       },
                       icon: Icon(
                         Icons.star_border_outlined,
@@ -156,10 +203,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             : Colors.black,
                       ),
                     ),
-                    Text(annoucementStore.announcementList[data].title
-                        .toString()),
-                    Text(annoucementStore.announcementList[data].description
-                        .toString()),
+                    Text(announcement.title.toString()),
+                    Text(announcement.description.toString()),
                     Text(
                         'Data de criação: ${formatHour(DateTime.parse(annoucementStore.announcementList[data].createdAt!))}'),
                   ],

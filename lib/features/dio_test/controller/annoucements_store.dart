@@ -96,19 +96,11 @@ abstract class _AnnoucementStoreBase with Store {
   }
 
   @action
-  void addItemList({
-    required String name,
-    required String title,
-    required String description,
-  }) {
+  void addItemList(AnnoucementsModel model) {
     try {
-      final AnnoucementsModel model = AnnoucementsModel(
-        title: name,
-        description: description,
-        userName: name,
-      );
+      favoriteList.insert(0, model);
 
-      announcementList.insert(0, model);
+      inspect(model);
     } catch (e) {
       throw e;
     }
@@ -120,12 +112,15 @@ abstract class _AnnoucementStoreBase with Store {
   @action
   void setIsFavorite(bool value) => isFavorite = value;
 
+  @observable
+  List<AnnoucementsModel> favoriteList = [];
+
   @action
   void addFavorite({required bool favorite}) {
     try {
       final AnnoucementsModel model = AnnoucementsModel(isFavorite: favorite);
-
-      announcementList.add(model);
+      favoriteList.add(model);
+      inspect(model);
     } catch (e) {
       throw e;
     }

@@ -47,4 +47,27 @@ class AnnoucementsModel {
     data['announcementType'] = announcementType;
     return data;
   }
+
+  AnnoucementsModel copyWith({
+    String? title,
+    String? description,
+    String? userId,
+    String? userName,
+    String? createdAt,
+    String? id,
+    int? announcementType,
+    List<String>? files,
+    bool? isFavorite,
+  }) {
+    return AnnoucementsModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      userId: userId ?? this.userId,
+      userName: userName ?? this.userName,
+      createdAt: createdAt ?? this.createdAt,
+      announcementType: announcementType ?? this.announcementType,
+      files: files ?? this.files,
+    );
+  }
 }

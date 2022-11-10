@@ -105,6 +105,22 @@ mixin _$AnnoucementStore on _AnnoucementStoreBase, Store {
     });
   }
 
+  late final _$favoriteListAtom =
+      Atom(name: '_AnnoucementStoreBase.favoriteList', context: context);
+
+  @override
+  List<AnnoucementsModel> get favoriteList {
+    _$favoriteListAtom.reportRead();
+    return super.favoriteList;
+  }
+
+  @override
+  set favoriteList(List<AnnoucementsModel> value) {
+    _$favoriteListAtom.reportWrite(value, super.favoriteList, () {
+      super.favoriteList = value;
+    });
+  }
+
   late final _$loadAnnoucementsAsyncAction =
       AsyncAction('_AnnoucementStoreBase.loadAnnoucements', context: context);
 
@@ -180,15 +196,11 @@ mixin _$AnnoucementStore on _AnnoucementStoreBase, Store {
   }
 
   @override
-  void addItemList(
-      {required String name,
-      required String title,
-      required String description}) {
+  void addItemList(AnnoucementsModel model) {
     final _$actionInfo = _$_AnnoucementStoreBaseActionController.startAction(
         name: '_AnnoucementStoreBase.addItemList');
     try {
-      return super
-          .addItemList(name: name, title: title, description: description);
+      return super.addItemList(model);
     } finally {
       _$_AnnoucementStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -235,7 +247,8 @@ name: ${name},
 title: ${title},
 description: ${description},
 announcementList: ${announcementList},
-isFavorite: ${isFavorite}
+isFavorite: ${isFavorite},
+favoriteList: ${favoriteList}
     ''';
   }
 }

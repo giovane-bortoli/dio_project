@@ -17,11 +17,13 @@ class _CreateAnnoucementViewState extends State<CreateAnnoucementView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.popAndPushNamed(context, '/home');
-              },
-              icon: const Icon(Icons.arrow_back_ios))),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.popAndPushNamed(context, '/home');
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
+      ),
       body: content(context),
     );
   }
@@ -81,12 +83,13 @@ class _CreateAnnoucementViewState extends State<CreateAnnoucementView> {
 
   Widget _createButton() => ElevatedButton(
         onPressed: () {
-          //Método para adicionar a Lista
-          annoucementStore.addItemList(
-            name: annoucementStore.name,
-            title: annoucementStore.title,
-            description: annoucementStore.description,
-          );
+          // //Método para adicionar a Lista
+          // annoucementStore.addItemList(
+          //   date: annoucementStore.name,
+          //   title: annoucementStore.title,
+          //   description: annoucementStore.description,
+          //   isFavorite: annoucementStore.isFavorite,
+          // );
         },
         child: const Text('Create Annoucement'),
       );
