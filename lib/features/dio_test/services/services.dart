@@ -1,17 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-import 'dart:developer';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:dio_project/features/dio_test/controller/annoucements_store.dart';
 import 'package:dio_project/features/dio_test/models/annoucements_model.dart';
 import 'package:dio_project/features/dio_test/models/post_annoucements_model.dart';
 import 'package:dio_project/features/dio_test/services/prefs.dart';
 import 'package:dio_project/features/dio_test/services/services_interface.dart';
-import 'package:dio_project/main.dart';
 import 'package:dio_project/shared/client/client.dart';
-import 'package:dio_project/shared/client/dio_impl.dart';
 import 'package:dio_project/shared/client/errors/error_exceptions.dart';
 import 'package:dio_project/shared/utils/app_configs.dart';
 

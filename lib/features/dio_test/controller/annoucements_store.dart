@@ -1,27 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
-
-import 'package:dio_project/features/dio_test/models/annoucements_model.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
-
-import 'package:dio_project/features/dio_test/services/prefs.dart';
+import 'package:dio_project/features/dio_test/models/annoucements_model.dart';
+import 'package:dio_project/features/dio_test/services/prefs_interface.dart';
 import 'package:dio_project/features/dio_test/services/services_interface.dart';
-import 'package:dio_project/shared/Widgets/custom_snack_bar.dart';
 import 'package:dio_project/shared/client/errors/error_exceptions.dart';
+
 part 'annoucements_store.g.dart';
 
 class AnnoucementStore = _AnnoucementStoreBase with _$AnnoucementStore;
 
 abstract class _AnnoucementStoreBase with Store {
-  Prefs prefs = Prefs();
   final ServiceInterface services;
+  final PrefsInterface prefs;
 
   List<AnnoucementsModel> _initialList = [];
 
   _AnnoucementStoreBase({
     required this.services,
+    required this.prefs,
   });
 
   @observable
